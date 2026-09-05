@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>A Little Surprise</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <audio id="bg-music" loop>
+    <source src="music.mp3" type="audio/mpeg">
+  </audio>
+
+  <div id="step-1" class="screen active">
+    <h1>A Little Surprise</h1>
+    <h2>Just For You</h2>
+    <button onclick="nextStep(2)">Open Your Surprise ✨</button>
+  </div>
+
+  <div id="step-2" class="screen">
+    <p>Sebelum lanjut aku ingin tau kamu sayang aku berapa persen</p>
+    <h1 id="percent">0%</h1>
+    <button id="heart-btn">❤️ Klik dan tahan</button>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
