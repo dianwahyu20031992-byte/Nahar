@@ -5,22 +5,113 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>A Little Surprise</title>
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Sacramento&display=swap" rel="stylesheet">
 </head>
 <body>
-  <audio id="bg-music" loop>
-    <source src="music.mp3" type="audio/mpeg">
+
+  <!-- Musik Latar (Sembunyi) -->
+  <audio id="bg-music" loop preload="auto">
+    <source src="musik.mp3" type="audio/mpeg">
   </audio>
 
-  <div id="step-1" class="screen active">
-    <h1>A Little Surprise</h1>
-    <h2>Just For You</h2>
-    <button onclick="nextStep(2)">Open Your Surprise ✨</button>
+  <div class="container">
+    <!-- Screen 1: Cover -->
+    <div id="screen-1" class="screen active">
+      <h2 class="subtitle">A Little Surprise</h2>
+      <h1 class="title">Just For You</h1>
+      <button class="btn" onclick="goToScreen(2)">Open Your Surprise ✨</button>
+    </div>
+
+    <!-- Screen 2: Love Meter -->
+    <div id="screen-2" class="screen">
+      <p class="desc">Sebelum lanjut aku ingin tau kamu sayang aku berapa persen</p>
+      <div class="counter"><span id="percent">0</span>% <span id="emoji">🤬</span></div>
+      
+      <div id="heart-btn" class="heart-box">
+        <div class="heart-icon">❤️</div>
+        <span>Klik dan tahan</span>
+      </div>
+
+      <button id="next-to-gallery" class="btn hidden" onclick="goToScreen(3)">NEXT ➔</button>
+    </div>
+
+    <!-- Screen 3: Galeri Foto -->
+    <div id="screen-3" class="screen">
+      <h2 class="title-script">Our Memories</h2>
+      <p class="sub-desc">Klik foto untuk melihat pesan</p>
+
+      <div class="gallery-grid">
+        <div class="card" onclick="openPopup('Senyummu', 'Entah kenapa ya, tiap lihat kamu senyum rasanya moodku langsung ikut bagus.', 'foto1.jpg')">
+          <img src="foto1.jpg" alt="Memory 1">
+        </div>
+        <div class="card" onclick="openPopup('Nyaman', 'Kalau lagi sama kamu rasanya tenang aja. Bisa jadi diri sendiri.', 'foto2.jpg')">
+          <img src="foto2.jpg" alt="Memory 2">
+        </div>
+        <div class="card" onclick="openPopup('Tawamu', 'Aku paling suka denger kamu ketawa. Pelipur capek seharian.', 'foto3.jpg')">
+          <img src="foto3.jpg" alt="Memory 3">
+        </div>
+        <div class="card" onclick="openPopup('Kamu', 'Semakin lama kenal kamu, semakin banyak hal kecil yang bikin aku sayang.', 'foto4.jpg')">
+          <img src="foto4.jpg" alt="Memory 4">
+        </div>
+        <div class="card" onclick="openPopup('Momen Ini', 'Setiap detik yang dihabiskan bareng kamu itu berharga banget.', 'foto5.jpg')">
+          <img src="foto5.jpg" alt="Memory 5">
+        </div>
+        <div class="card" onclick="openPopup('Favoritku', 'Foto ini selalu bikin aku tersenyum tiap kali ngeliatnya.', 'foto6.jpg')">
+          <img src="foto6.jpg" alt="Memory 6">
+        </div>
+      </div>
+
+      <button class="btn" style="margin-top: 20px;" onclick="goToScreen(35)">LANJUT KE HADIAH ➔</button>
+    </div>
+
+    <!-- Screen 3.5: Kupon Virtual / Birthday Coupons -->
+    <div id="screen-35" class="screen">
+      <h2 class="title-script">Birthday Coupons 🎁</h2>
+      <p class="sub-desc">Buka semua kado di bawah ini untuk klaim kupon spesial dari aku!</p>
+
+      <div class="coupons-grid">
+        <div class="coupon-card" onclick="claimCoupon(this, '🎟️ KUPON 1', 'Free Hugs & Treat Hari Ini! (Bisa klaim makanan favoritmu)')">
+          <div class="box-icon">🎁</div>
+          <span>Buka Kado 1</span>
+        </div>
+        <div class="coupon-card" onclick="claimCoupon(this, '🎟️ KUPON 2', 'Bebas Pilih Tempat Jalan/Nonton tanpa debat!')">
+          <div class="box-icon">🎁</div>
+          <span>Buka Kado 2</span>
+        </div>
+        <div class="coupon-card" onclick="claimCoupon(this, '🎟️ KUPON 3', 'Kupon Dimaafin Kalau Aku Bikin Kesal (Berlaku 1x)')">
+          <div class="box-icon">🎁</div>
+          <span>Buka Kado 3</span>
+        </div>
+        <div class="coupon-card" onclick="claimCoupon(this, '🎟️ KUPON 4', 'Diturutin 1 Permintaan Apapun Hari Ini!')">
+          <div class="box-icon">🎁</div>
+          <span>Buka Kado 4</span>
+        </div>
+      </div>
+
+      <button id="btn-to-screen4" class="btn hidden" style="margin-top: 20px;" onclick="goToScreen(4)">LIHAT UCAPAN ➔</button>
+    </div>
+
+    <!-- Screen 4: Ucapan & Typewriter -->
+    <div id="screen-4" class="screen">
+      <h1 class="hbd-title">Happy Birthday</h1>
+      <h1 class="name-title">DIAN SEPTI AZIZAH</h1>
+      
+      <div class="message-box">
+        <p id="typewriter-text"></p>
+      </div>
+
+      <button class="btn" onclick="location.reload()">↺ REPLAY</button>
+    </div>
   </div>
 
-  <div id="step-2" class="screen">
-    <p>Sebelum lanjut aku ingin tau kamu sayang aku berapa persen</p>
-    <h1 id="percent">0%</h1>
-    <button id="heart-btn">❤️ Klik dan tahan</button>
+  <!-- Modal Popup (Untuk Foto & Kupon) -->
+  <div id="popup-modal" class="modal" onclick="closePopup()">
+    <div class="modal-content" onclick="event.stopPropagation()">
+      <span class="close-btn" onclick="closePopup()">&times;</span>
+      <img id="popup-img" src="" alt="Detail" style="display:none;">
+      <h3 id="popup-title"></h3>
+      <p id="popup-text"></p>
+    </div>
   </div>
 
   <script src="script.js"></script>
